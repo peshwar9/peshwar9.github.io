@@ -1,0 +1,6 @@
+[book]
+authors = ["PEshwar"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Navigating Rust - Beginner's Guide"
