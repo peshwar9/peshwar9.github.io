@@ -36,40 +36,40 @@ Let us look at examples of declaring each of these data types in code listing be
 
 
 ```
- 1 fn main() {
- 2     // Declare a variable x of type unsigned integer of length 8 bits , and initialize it with value -5.
- 3     let x: i8 = -5;
- 4
- 5     // Similarly i16, 132, i64 and i128 represent data types of length 16-bits, 32-bits, 64-bits and 128-bits respectively
- 6
- 7     // Declare a variable x of type signed integer of length 8 bits , and initialize it with value 5
- 8     let y: u8 = 5;
- 9
-10     // Similarly u16, u32, u64 and u128 represent data types of length 16-bits, 32-bits, 64-bits and 128-bits respectively
-11
-12     // Declare a variable of single-precision floating point data type and initialize it with value of 5.0
-13     let z: f32 = 5.0;
-14     // Similarly f64 represents double precision floating point data type
-15     println!("{},{},{:.1}", x, y, z);
-16
-17     // Declare a variable of type Boolean
-18     let am_i_successful: bool = true;
-19
-20     // Declare a variable of type character and initialize it with a letter
-21     let this_is_a_char: char = 'r';
-22
-23     println!("{}.{}", am_i_successful, this_is_a_char);
-24
-25     // Declare a variable of type tuple and initialize it.
-26     let this_is_a_tuple: (u8, bool, char) = (2, false, 'c');
-27     println!("The value of tuple is {:?}", this_is_a_tuple);
-28
-29     // Declare a variable of type arrray and initialize it
-30     let inner_planets: [&str; 4] = ["Mercury", "Venus", "Earth", "Mars"];
-31     println!("Inner planets are {:?}", inner_planets);
-32     //Access the second element of the inner_planets array
-33     println!("2nd inner planet is {:?}", inner_planets[1]);
-34 }
+  fn main() {
+      // Declare a variable x of type unsigned integer of length 8 bits , and initialize it with value -5.
+      let x: i8 = -5;
+ 
+      // Similarly i16, 132, i64 and i128 represent data types of length 16-bits, 32-bits, 64-bits and 128-bits respectively
+ 
+      // Declare a variable x of type signed integer of length 8 bits , and initialize it with value 5
+      let y: u8 = 5;
+ 
+     // Similarly u16, u32, u64 and u128 represent data types of length 16-bits, 32-bits, 64-bits and 128-bits respectively
+
+     // Declare a variable of single-precision floating point data type and initialize it with value of 5.0
+     let z: f32 = 5.0;
+     // Similarly f64 represents double precision floating point data type
+     println!("{},{},{:.1}", x, y, z);
+
+     // Declare a variable of type Boolean
+     let am_i_successful: bool = true;
+
+     // Declare a variable of type character and initialize it with a letter
+     let this_is_a_char: char = 'r';
+
+     println!("{}.{}", am_i_successful, this_is_a_char);
+
+     // Declare a variable of type tuple and initialize it.
+     let this_is_a_tuple: (u8, bool, char) = (2, false, 'c');
+     println!("The value of tuple is {:?}", this_is_a_tuple);
+
+     // Declare a variable of type arrray and initialize it
+     let inner_planets: [&str; 4] = ["Mercury", "Venus", "Earth", "Mars"];
+     println!("Inner planets are {:?}", inner_planets);
+     //Access the second element of the inner_planets array
+     println!("2nd inner planet is {:?}", inner_planets[1]);
+ }
 
 ```
 
@@ -94,46 +94,42 @@ Rust standard Library documentation is available [here](https://doc.rust-lang.or
 
 
 ```
-  1 use rand::Rng;
-  2 use std::env;
-  3 fn main() {
-  4     // Generate a random number between 1 and 100
-  5     let random_number = generate_random_number();
-  6 
-  7     println!("Random num is {} ", random_number);
-  8 
-  9     let user_input = get_user_input();
- 10 
- 11     println!("User input is {}", user_input);
- 12 
- 13     if (user_input == random_number) {
- 14         println!("Congratulations, you will get 10 times your money");
- 15     } else {
- 16         println!("Sorry, you lose. I will now take your money")
- 17     }
- 18 }
- 19 
- 20 fn generate_random_number() -> u8 {
- 21     let mut rng = rand::thread_rng();
- 22     rng.gen_range(1, 6)
- 23 }
- 24 
- 25 fn get_user_input() -> u8 {
- 26     let user_input = env::args().nth(1).unwrap();
- 27     let to_number: u8 = user_input.parse().expect("Not a number");
- 28     to_number
- 29 }
+ use rand::Rng;
+ use std::env;
+ fn main() {
+     // Generate a random number between 1 and 100
+     let random_number = generate_random_number();
+ 
+     println!("Random num is {} ", random_number);
+ 
+     let user_input = get_user_input();
+  
+      println!("User input is {}", user_input);
+  
+      if (user_input == random_number) {
+          println!("Congratulations, you will get 10 times your money");
+      } else {
+          println!("Sorry, you lose. I will now take your money")
+      }
+  }
+  
+  fn generate_random_number() -> u8 {
+      let mut rng = rand::thread_rng();
+      rng.gen_range(1, 6)
+  }
+  
+  fn get_user_input() -> u8 {
+      let user_input = env::args().nth(1).unwrap();
+      let to_number: u8 = user_input.parse().expect("Not a number");
+      to_number
+  }
 ```
 
-Lines 1-2 show the imports we are making to bring in Rand crate module and a standard library module into the scope of this source code.  
+First two lines of code show the imports we are making to bring in Rand crate module and a standard library module into the scope of this source code.  
 
-Lines 3 - 18 correspond to the ```main( )``` function.  
+We then have the main () function, and two other functions for generating random number and to get user input from command line, respectively.  
 
-Lines 20-23 and 25-29 are the two functions for generating random number and to get user input from command line, respectively.  
-
-In the ```main( )``` function, lines 5 and 9 contain code to call the two functions to get random number generated and to get user inputs.  
-
-Lines 13-17 show the control flow code to check if the user input matches the random number generated, and print out appropriate messages.  
+In the ```main( )``` function, we see code to call the two functions to get random number generated and to get user inputs. This is followed by  the control flow code to check if the user input matches the random number generated, and print out appropriate messages.  
 
 It is a simple program, but serves to demonstrate the concepts discussed so far.
 
