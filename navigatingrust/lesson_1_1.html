@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Chapter 1 - Navigating Rust - Beginner's Guide</title>
+        <title>Say hello! - Navigating Rust - Beginner's Guide</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="chapter_1.html" class="active"><strong aria-hidden="true">1.</strong> Chapter 1</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="section_1.html"><strong aria-hidden="true">1.</strong> Program structure and control</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="expanded "><a href="lesson_1_1.html" class="active"><strong aria-hidden="true">1.1.</strong> Say hello!</a></li><li class=""><a href="lesson_1_2.html"><strong aria-hidden="true">1.2.</strong> Control flow : Say hello conditionally</a></li><li class=""><a href="lesson_1_3.html"><strong aria-hidden="true">1.3.</strong> Loops: Say hello continually</a></li><li class=""><a href="lesson_1_4.html"><strong aria-hidden="true">1.4.</strong> Functions &amp; closures: Say hello smartly</a></li></ol></li><li class="expanded "><a href="section_2.html"><strong aria-hidden="true">2.</strong> Data types and immutablity</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_2_1.html"><strong aria-hidden="true">2.1.</strong> Data types: Let's play a betting game</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -147,14 +147,60 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#chapter-1" id="chapter-1">Chapter 1</a></h1>
+                        <h1><a class="header" href="#say-hello" id="say-hello">Say hello!</a></h1>
+<h3><a class="header" href="#what-will-you-learn" id="what-will-you-learn">What will you learn?</a></h3>
+<ol>
+<li>Structure of a minimal rust program</li>
+<li>What is a  statement in Rust?</li>
+<li>How to print out a value to the terminal</li>
+<li>Differences between macros and functions</li>
+</ol>
+<h3><a class="header" href="#activity" id="activity">Activity</a></h3>
+<ul>
+<li>Write your first program in Rust to print Hello World</li>
+</ul>
+<h3><a class="header" href="#anatomy-of-code" id="anatomy-of-code">Anatomy of code</a></h3>
+<pre><code>fn main() {
+  println!(&quot;Hello world, I have arrived&quot;);
+}
+</code></pre>
+<p>The <code>fn</code> keyword indicates it is a function.
+<code>main( )</code> keyword specifies that code execution will begin here. <code>main( )</code> is a function which does not take any parameters, and has no return value.
+The pair of curly braces <code>{ }</code> encloses the scope of the main function within which the rest of the code will reside.</p>
+<p>Now, this empty function really does nothing, because we have not specified any instructions inside the main function. Let us introduce a statement for the program to greet us on start-up, within the main function. In Rust, a statement is an instruction that performs some action and does not return a value. </p>
+<p><code>println!(&quot;Hello world&quot;)</code></p>
+<p>The statement above contains a built-in macro called <code>println!</code> which takes a string value as an argument and prints the string to the terminal. A macro is just a short-hand notation representing a block of code, it is similar to a function but there are a few key differences. Notice that macros in Rust end with a semicolon.
+Run the program now. You should see <code>Hello World</code> printed in the terminal. </p>
+<h3><a class="header" href="#rust-concepts" id="rust-concepts">Rust Concepts</a></h3>
+<p>In Rust, both macros and functions denote blocks of code that perform specific computations and can be called from another section of code. But there are key differences:
+Macro is a way of writing code, which in turn generates other rust code (also known as metaprogramming) at compile-time, whereas a function is hand-coded by the developer. At the time of compilation, the compiler replaces the macro name with the actual code used to accomplish that functionality. 
+The benefit for the developer is that macros make code shorter and easier to read. The drawback with macros is that they are more complex to conceive and write than functions.</p>
+<h3><a class="header" href="#tasks-for-you" id="tasks-for-you">Tasks for you</a></h3>
+<ol>
+<li>
+<p>Print Hello world in any other language.<br />
+<em>Note that Rust supports both single-byte languages (like English, French, German, Spanish) where each alphabet of the language is stored in a single-byte in memory and double-byte languages (eg, Chinese/Mandarin, Japanese) where each alphabet uses two bytes in memory. This is possible because the char type in Rust is 4 bytes in length.</em></p>
+</li>
+<li>
+<p>Print Hello world with emotion by adding emojis 😀.<br />
+<em>Have you wondered how this actually works? Rust supports unicode in its core character data type, and unicode assigns a unique number for every character, no matter the platform or programming language.</em></p>
+</li>
+</ol>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="section_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="lesson_1_2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -164,7 +210,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="section_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a rel="next" href="lesson_1_2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 

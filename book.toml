@@ -4,3 +4,10 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Navigating Rust - Beginner's Guide"
+[output.html]
+theme = "src/theme"
+[output.html.fold]
+enable = true
+level = 1
+[build]
+build-dir = "navigatingrust"

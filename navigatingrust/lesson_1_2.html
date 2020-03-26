@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Control flow : Say hello conditionally - Navigating Rust - Beginner's Guide</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded "><a href="section_1.html"><strong aria-hidden="true">1.</strong> Program structure and control</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_1_1.html"><strong aria-hidden="true">1.1.</strong> Say hello!</a></li><li class="expanded "><a href="lesson_1_2.html" class="active"><strong aria-hidden="true">1.2.</strong> Control flow : Say hello conditionally</a></li><li class=""><a href="lesson_1_3.html"><strong aria-hidden="true">1.3.</strong> Loops: Say hello continually</a></li><li class=""><a href="lesson_1_4.html"><strong aria-hidden="true">1.4.</strong> Functions &amp; closures: Say hello smartly</a></li></ol></li><li class="expanded "><a href="section_2.html"><strong aria-hidden="true">2.</strong> Data types and immutablity</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_2_1.html"><strong aria-hidden="true">2.1.</strong> Data types: Let's play a betting game</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Navigating Rust - Beginner's Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#control-flow--say-hello-conditionally" id="control-flow--say-hello-conditionally">Control Flow : Say hello conditionally</a></h1>
+<h3><a class="header" href="#what-will-you-learn" id="what-will-you-learn">What will you learn?</a></h3>
+<ol>
+<li>Declaring a variable and assigning it a value</li>
+<li>Executing code by evaluating a condition</li>
+<li>Difference between mutable and immutable variables, and why immutability of variables is important for program safety</li>
+</ol>
+<h3><a class="header" href="#activity" id="activity">Activity</a></h3>
+<ul>
+<li>Write a program to print Hello World in different languages based on evaluating a condition.</li>
+</ul>
+<h3><a class="header" href="#anatomy-of-code" id="anatomy-of-code">Anatomy of code</a></h3>
+<p>Control flow is the feature of a programming language that let’s the developer decide whether to execute some code only once, repeatedly or only under certain conditions. In Rust, control flows are enabled by <strong>if expressions</strong> and <strong>loops</strong>.<br />
+Let’s first declare a variable.<br />
+Variables are used to store values inside a rust program. The following is an example of a let statement that creates a variable called <code>am_i_happy</code> and initializes it with the value <code>Yes</code>.</p>
+<pre><code>let am_i_happy = &quot;Yes&quot;;
+</code></pre>
+<p>By default , variables are <strong>immutable</strong> in rust. What this means is that the following line of code will show a compilation error, because <code>am_i_happy</code> is immutable (by default).</p>
+<pre><code>let am_i_happy = &quot;Yes&quot;;
+am_i_happy = &quot;No&quot;;
+</code></pre>
+<p>Compiler error shown below</p>
+<pre><code>--&gt; main.rs:4:5
+ |
+3 |     let am_i_happy = &quot;Yes&quot;;
+ |         ----------
+ |         |
+ |         first assignment to `am_i_happy`
+ |         help: make this binding mutable: `mut am_i_happy`
+4 |     am_i_happy = &quot;No&quot;;
+ |     ^^^^^^^^^^^^^^^^^ cannot assign twice to immutablevariable
+
+error: aborting due to previous error
+</code></pre>
+<p>Use the <strong>mut</strong> keyword explicitly in variable declaration, if you want to modify the value of a variable after initial assignment.</p>
+<pre><code>let mut am_i_happy = &quot;Yes&quot;;
+</code></pre>
+<p>Getting back to our original goal of learning how to conditionally print , let us look at the second part of the code</p>
+<pre><code>if am_i_happy == &quot;Yes&quot; {
+       println!(&quot;Hello World! 😀&quot;);
+   } else {
+       println!(&quot;Hello World! 😩&quot;);
+   }
+</code></pre>
+<p>If expressions allow the developer to specify that a portion of code should be executed only when a specific condition is met. Note there is no parenthesis for the condition being evaluated in rust in <strong>if expression</strong>, and there is a block of code after each condition.</p>
+<p>You can also specify multiple conditions by using <strong>else if</strong> expressions . When the program is run, it checks each condition in a sequence and executes code block corresponding to the first condition which evaluates to true.</p>
+<pre><code>   if am_i_happy == “True” {
+       // execute the code in this block
+   } else if am_i_happy = “Maybe” {
+       // execute the code in this block
+   } else if am_i_happy == “False” {
+       // execute the code in this block
+   }
+</code></pre>
+<p>Note that the condition to be evaluated can be either a variable of boolean type, or it can be an expression that evaluates to a boolean. A boolean type takes only one of two values - true &amp; false.</p>
+<p>If the variable <code>am_i_happy</code> was declared to be of boolean type, the if expression would look like below:</p>
+<pre><code>let am_i_happy = true;
+</code></pre>
+<p>In the declaration above, <code>am_i_happy</code> is evaluated to <code>boolean</code> type through <strong>type inference</strong> by the compiler because the  keyword <code>true</code> is used to initialize the variable, even though we have not explicitly stated the data type.<br />
+Then the if statement would change to:</p>
+<pre><code>   if am_i_happy {
+       println!(&quot;Hello World! 😀&quot;);
+   } else {
+       println!(&quot;Hello World! 😩&quot;);
+   }
+</code></pre>
+<p>There is another interesting way to use the if expression.  As an expression in Rust evaluates to a value, the if expression can be used to initialize a value as part of a variable declaration as follows.</p>
+<pre><code>   let i_won_competition = false;
+   let am_i_happy = if i_won_competition {
+     true
+   } else {
+     false
+   };
+   println!(&quot;Am i happy is {}&quot;, am_i_happy);
+</code></pre>
+<p>Note that while there is a semicolon after the <code>if else</code> expression, there is no delimiter after <code>true</code> and <code>false</code> keywords.</p>
+<h3><a class="header" href="#rust-concepts" id="rust-concepts">Rust Concepts</a></h3>
+<p><strong>Why is immutability a virtue?</strong> The value associated with a variable at a particular point in time represents a particular state of the program at that time. Each time a variable changes its value , the program can go to a different state. This is important to understand because all programs are essentially finite state machines. The behaviour of a program at any point of time is dependent upon any external inputs the program receives and the current state it is in.<br />
+For example , in an order management system, if the order has already been executed (i.e. it is in the executed state), it cannot be cancelled (i.e it cannot move to a cancelled state).  If over course of time, one of the new developers in the project accidentally changes the state of the order to cancelled, the order system can lose its data integrity and cause havoc in the order workflow resulting in customer dissatisfaction. This is the reason why Rust makes all variables immutable by default, and forces a developer to decide upfront whether a variable’s value will change over the scope it is declared in, or not.<br />
+Ofcourse, we cannot have business processes without mutable variables, but Rust requires the developer to explicitly specify the mut keyword on a need basis to enhance program safety.</p>
+<h3><a class="header" href="#tasks-for-you" id="tasks-for-you">Tasks for you</a></h3>
+<ol>
+<li>Write a program to declare a variable called <code>language</code> , give it an initial value, and then print <code>Hello world</code> in different languages based on the value stored in the <code>language</code> variable. Write code to print <code>Hello World</code> in up to 4 different languages using <code>if..</code> and <code>else if..</code> expressions.</li>
+<li>In the program above, try to alter the value of the <code>language</code> variable after the initial declaration. Read through the compilation error and see how descriptive and helpful the Rust compiler messages are. Then change the declaration of <code>language</code> variable to  <code>mutable</code> , and see the results.</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="lesson_1_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="lesson_1_3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="lesson_1_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="lesson_1_3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

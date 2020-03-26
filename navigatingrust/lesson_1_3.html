@@ -3,9 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Navigating Rust - Beginner's Guide</title>
-        
-        <meta name="robots" content="noindex" />
+        <title>Loops: Say hello continually - Navigating Rust - Beginner's Guide</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -83,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Chapter 1</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="section_1.html"><strong aria-hidden="true">1.</strong> Program structure and control</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_1_1.html"><strong aria-hidden="true">1.1.</strong> Say hello!</a></li><li class=""><a href="lesson_1_2.html"><strong aria-hidden="true">1.2.</strong> Control flow : Say hello conditionally</a></li><li class="expanded "><a href="lesson_1_3.html" class="active"><strong aria-hidden="true">1.3.</strong> Loops: Say hello continually</a></li><li class=""><a href="lesson_1_4.html"><strong aria-hidden="true">1.4.</strong> Functions &amp; closures: Say hello smartly</a></li></ol></li><li class="expanded "><a href="section_2.html"><strong aria-hidden="true">2.</strong> Data types and immutablity</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_2_1.html"><strong aria-hidden="true">2.1.</strong> Data types: Let's play a betting game</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,14 +147,89 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#chapter-1" id="chapter-1">Chapter 1</a></h1>
+                        <h1><a class="header" href="#loops-say-hello-continually" id="loops-say-hello-continually">Loops: Say hello continually</a></h1>
+<h3><a class="header" href="#what-will-you-learn" id="what-will-you-learn">What will you learn?</a></h3>
+<p>Three types of loops for repeated operations and calculations- loops, while and for</p>
+<h3><a class="header" href="#activity" id="activity">Activity</a></h3>
+<ul>
+<li>Write a program to print Hello World multiple times.</li>
+</ul>
+<h3><a class="header" href="#anatomy-of-code" id="anatomy-of-code">Anatomy of code</a></h3>
+<p>To execute a block of code multiple times, Rust has the control flow feature called loops. There are three types of loops in Rust: <strong>loop</strong>, <strong>while</strong> and <strong>for</strong>.</p>
+<p>We will first look at the <strong>loop</strong>.<br />
+The loop keyword denotes an  infinite, unconditional loop .</p>
+<pre><code>fn main() {
+   loop {
+       println!(&quot;Hello world!&quot;);
+   }
+}
+</code></pre>
+<p>If you execute this program, you will see <code>Hello world</code> printed repeatedly in your terminal, until you stop the program with <strong>ctrl+c</strong>.  Such a program seems pretty pointless at first glance, but this is more or less how long-running services operate, e.g., web application,   api , smtp servers which keep listening for incoming requests in a continuous loop.</p>
+<p>You can use the <strong>break</strong> statement to exit the loop, and continue to move to the next iteration in loop as shown in example below.</p>
+<pre><code>fn main() {
+ let mut number_of_times = 0; 
+   // Infinite loop
+   loop {
+       number_of_times += 1;
+       if number_of_times == 1 {
+           println!(&quot;Hello {} time&quot;, number_of_times);
+           // Skip the rest of this iteration
+           continue;
+       }
+       if number_of_times == 3 {
+           println!(&quot;Goodbye {} times&quot;, number_of_times);
+           // Exit this loop
+           break;
+       }
+   }
+}
+</code></pre>
+<p>Let us next look at conditional loops with the <strong>while</strong> keyword. It is used to check for a condition inside the loop.</p>
+<pre><code>fn main() {
+   let mut number_of_times = 5;
+   while number_of_times &gt; 0 {
+       println!(&quot;Hello World&quot;);
+       number_of_times -= 1;
+   }
+   println!(&quot;Good bye!!!&quot;);
+}
+</code></pre>
+<p>If you run the program, you will see <code>Hello World</code> printed five times in the terminal, followed by <code>Good bye</code>.</p>
+<p>The last type of looping construct we will see is the <strong>for</strong> loop.</p>
+<pre><code>fn main() {
+   let greetings = [&quot;Hello&quot;, &quot;Hola&quot;, &quot;Bonjour&quot;, &quot;Hallo&quot;, &quot;こんにちは&quot;];
+   for greeting in greetings.iter() {
+       println!(&quot;{}&quot;, greeting);
+   }
+}
+</code></pre>
+<p><code>For.. in</code> loop is a very safe and concise way to iterate through collections. The <strong>iter()</strong> method is available over collection data types , such as the array and this makes it very pleasant to write and read code compared to equivalent <strong>for loop</strong> constructs in many other programming languages.<br />
+If you run the program, you will see each element of the <code>greetings</code> array printed in a sequence as the <code>for</code> loop executes.<br />
+Another way to use the <code>for</code> loop is to use a range notation <code>x..y</code>, as follows:</p>
+<pre><code>for n in 1..5 {
+ println!(&quot;Hello world {}&quot;,n)
+}
+</code></pre>
+<h3><a class="header" href="#tasks-for-you" id="tasks-for-you">Tasks for you</a></h3>
+<ol>
+<li>Declare an array with a list of names. Use a suitable looping construct to iterate through the array and print out a greeting for each name.</li>
+<li>Write a program to iterate through numbers 1 to 100 and print out  the square of the number  if the number is even, and the cube of the number if the number is odd.</li>
+</ol>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="lesson_1_2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="lesson_1_4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -166,7 +239,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="lesson_1_2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a rel="next" href="lesson_1_4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
@@ -199,14 +280,6 @@
         <!-- Custom JS scripts -->
         
 
-        
-        
-        <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
-        
         
 
     </body>

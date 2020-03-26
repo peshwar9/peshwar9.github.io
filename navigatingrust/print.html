@@ -1,0 +1,631 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Navigating Rust - Beginner's Guide</title>
+        
+        <meta name="robots" content="noindex" />
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded "><a href="section_1.html"><strong aria-hidden="true">1.</strong> Program structure and control</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_1_1.html"><strong aria-hidden="true">1.1.</strong> Say hello!</a></li><li class=""><a href="lesson_1_2.html"><strong aria-hidden="true">1.2.</strong> Control flow : Say hello conditionally</a></li><li class=""><a href="lesson_1_3.html"><strong aria-hidden="true">1.3.</strong> Loops: Say hello continually</a></li><li class=""><a href="lesson_1_4.html"><strong aria-hidden="true">1.4.</strong> Functions &amp; closures: Say hello smartly</a></li></ol></li><li class="expanded "><a href="section_2.html"><strong aria-hidden="true">2.</strong> Data types and immutablity</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_2_1.html"><strong aria-hidden="true">2.1.</strong> Data types: Let's play a betting game</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Navigating Rust - Beginner's Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#program-structure-and-control" id="program-structure-and-control">Program structure and control</a></h1>
+<p>This section describes the basic structure of a rust program and its components.</p>
+<h1><a class="header" href="#say-hello" id="say-hello">Say hello!</a></h1>
+<h3><a class="header" href="#what-will-you-learn" id="what-will-you-learn">What will you learn?</a></h3>
+<ol>
+<li>Structure of a minimal rust program</li>
+<li>What is a  statement in Rust?</li>
+<li>How to print out a value to the terminal</li>
+<li>Differences between macros and functions</li>
+</ol>
+<h3><a class="header" href="#activity" id="activity">Activity</a></h3>
+<ul>
+<li>Write your first program in Rust to print Hello World</li>
+</ul>
+<h3><a class="header" href="#anatomy-of-code" id="anatomy-of-code">Anatomy of code</a></h3>
+<pre><code>fn main() {
+  println!(&quot;Hello world, I have arrived&quot;);
+}
+</code></pre>
+<p>The <code>fn</code> keyword indicates it is a function.
+<code>main( )</code> keyword specifies that code execution will begin here. <code>main( )</code> is a function which does not take any parameters, and has no return value.
+The pair of curly braces <code>{ }</code> encloses the scope of the main function within which the rest of the code will reside.</p>
+<p>Now, this empty function really does nothing, because we have not specified any instructions inside the main function. Let us introduce a statement for the program to greet us on start-up, within the main function. In Rust, a statement is an instruction that performs some action and does not return a value. </p>
+<p><code>println!(&quot;Hello world&quot;)</code></p>
+<p>The statement above contains a built-in macro called <code>println!</code> which takes a string value as an argument and prints the string to the terminal. A macro is just a short-hand notation representing a block of code, it is similar to a function but there are a few key differences. Notice that macros in Rust end with a semicolon.
+Run the program now. You should see <code>Hello World</code> printed in the terminal. </p>
+<h3><a class="header" href="#rust-concepts" id="rust-concepts">Rust Concepts</a></h3>
+<p>In Rust, both macros and functions denote blocks of code that perform specific computations and can be called from another section of code. But there are key differences:
+Macro is a way of writing code, which in turn generates other rust code (also known as metaprogramming) at compile-time, whereas a function is hand-coded by the developer. At the time of compilation, the compiler replaces the macro name with the actual code used to accomplish that functionality. 
+The benefit for the developer is that macros make code shorter and easier to read. The drawback with macros is that they are more complex to conceive and write than functions.</p>
+<h3><a class="header" href="#tasks-for-you" id="tasks-for-you">Tasks for you</a></h3>
+<ol>
+<li>
+<p>Print Hello world in any other language.<br />
+<em>Note that Rust supports both single-byte languages (like English, French, German, Spanish) where each alphabet of the language is stored in a single-byte in memory and double-byte languages (eg, Chinese/Mandarin, Japanese) where each alphabet uses two bytes in memory. This is possible because the char type in Rust is 4 bytes in length.</em></p>
+</li>
+<li>
+<p>Print Hello world with emotion by adding emojis 😀.<br />
+<em>Have you wondered how this actually works? Rust supports unicode in its core character data type, and unicode assigns a unique number for every character, no matter the platform or programming language.</em></p>
+</li>
+</ol>
+<h1><a class="header" href="#control-flow--say-hello-conditionally" id="control-flow--say-hello-conditionally">Control Flow : Say hello conditionally</a></h1>
+<h3><a class="header" href="#what-will-you-learn-1" id="what-will-you-learn-1">What will you learn?</a></h3>
+<ol>
+<li>Declaring a variable and assigning it a value</li>
+<li>Executing code by evaluating a condition</li>
+<li>Difference between mutable and immutable variables, and why immutability of variables is important for program safety</li>
+</ol>
+<h3><a class="header" href="#activity-1" id="activity-1">Activity</a></h3>
+<ul>
+<li>Write a program to print Hello World in different languages based on evaluating a condition.</li>
+</ul>
+<h3><a class="header" href="#anatomy-of-code-1" id="anatomy-of-code-1">Anatomy of code</a></h3>
+<p>Control flow is the feature of a programming language that let’s the developer decide whether to execute some code only once, repeatedly or only under certain conditions. In Rust, control flows are enabled by <strong>if expressions</strong> and <strong>loops</strong>.<br />
+Let’s first declare a variable.<br />
+Variables are used to store values inside a rust program. The following is an example of a let statement that creates a variable called <code>am_i_happy</code> and initializes it with the value <code>Yes</code>.</p>
+<pre><code>let am_i_happy = &quot;Yes&quot;;
+</code></pre>
+<p>By default , variables are <strong>immutable</strong> in rust. What this means is that the following line of code will show a compilation error, because <code>am_i_happy</code> is immutable (by default).</p>
+<pre><code>let am_i_happy = &quot;Yes&quot;;
+am_i_happy = &quot;No&quot;;
+</code></pre>
+<p>Compiler error shown below</p>
+<pre><code>--&gt; main.rs:4:5
+ |
+3 |     let am_i_happy = &quot;Yes&quot;;
+ |         ----------
+ |         |
+ |         first assignment to `am_i_happy`
+ |         help: make this binding mutable: `mut am_i_happy`
+4 |     am_i_happy = &quot;No&quot;;
+ |     ^^^^^^^^^^^^^^^^^ cannot assign twice to immutablevariable
+
+error: aborting due to previous error
+</code></pre>
+<p>Use the <strong>mut</strong> keyword explicitly in variable declaration, if you want to modify the value of a variable after initial assignment.</p>
+<pre><code>let mut am_i_happy = &quot;Yes&quot;;
+</code></pre>
+<p>Getting back to our original goal of learning how to conditionally print , let us look at the second part of the code</p>
+<pre><code>if am_i_happy == &quot;Yes&quot; {
+       println!(&quot;Hello World! 😀&quot;);
+   } else {
+       println!(&quot;Hello World! 😩&quot;);
+   }
+</code></pre>
+<p>If expressions allow the developer to specify that a portion of code should be executed only when a specific condition is met. Note there is no parenthesis for the condition being evaluated in rust in <strong>if expression</strong>, and there is a block of code after each condition.</p>
+<p>You can also specify multiple conditions by using <strong>else if</strong> expressions . When the program is run, it checks each condition in a sequence and executes code block corresponding to the first condition which evaluates to true.</p>
+<pre><code>   if am_i_happy == “True” {
+       // execute the code in this block
+   } else if am_i_happy = “Maybe” {
+       // execute the code in this block
+   } else if am_i_happy == “False” {
+       // execute the code in this block
+   }
+</code></pre>
+<p>Note that the condition to be evaluated can be either a variable of boolean type, or it can be an expression that evaluates to a boolean. A boolean type takes only one of two values - true &amp; false.</p>
+<p>If the variable <code>am_i_happy</code> was declared to be of boolean type, the if expression would look like below:</p>
+<pre><code>let am_i_happy = true;
+</code></pre>
+<p>In the declaration above, <code>am_i_happy</code> is evaluated to <code>boolean</code> type through <strong>type inference</strong> by the compiler because the  keyword <code>true</code> is used to initialize the variable, even though we have not explicitly stated the data type.<br />
+Then the if statement would change to:</p>
+<pre><code>   if am_i_happy {
+       println!(&quot;Hello World! 😀&quot;);
+   } else {
+       println!(&quot;Hello World! 😩&quot;);
+   }
+</code></pre>
+<p>There is another interesting way to use the if expression.  As an expression in Rust evaluates to a value, the if expression can be used to initialize a value as part of a variable declaration as follows.</p>
+<pre><code>   let i_won_competition = false;
+   let am_i_happy = if i_won_competition {
+     true
+   } else {
+     false
+   };
+   println!(&quot;Am i happy is {}&quot;, am_i_happy);
+</code></pre>
+<p>Note that while there is a semicolon after the <code>if else</code> expression, there is no delimiter after <code>true</code> and <code>false</code> keywords.</p>
+<h3><a class="header" href="#rust-concepts-1" id="rust-concepts-1">Rust Concepts</a></h3>
+<p><strong>Why is immutability a virtue?</strong> The value associated with a variable at a particular point in time represents a particular state of the program at that time. Each time a variable changes its value , the program can go to a different state. This is important to understand because all programs are essentially finite state machines. The behaviour of a program at any point of time is dependent upon any external inputs the program receives and the current state it is in.<br />
+For example , in an order management system, if the order has already been executed (i.e. it is in the executed state), it cannot be cancelled (i.e it cannot move to a cancelled state).  If over course of time, one of the new developers in the project accidentally changes the state of the order to cancelled, the order system can lose its data integrity and cause havoc in the order workflow resulting in customer dissatisfaction. This is the reason why Rust makes all variables immutable by default, and forces a developer to decide upfront whether a variable’s value will change over the scope it is declared in, or not.<br />
+Ofcourse, we cannot have business processes without mutable variables, but Rust requires the developer to explicitly specify the mut keyword on a need basis to enhance program safety.</p>
+<h3><a class="header" href="#tasks-for-you-1" id="tasks-for-you-1">Tasks for you</a></h3>
+<ol>
+<li>Write a program to declare a variable called <code>language</code> , give it an initial value, and then print <code>Hello world</code> in different languages based on the value stored in the <code>language</code> variable. Write code to print <code>Hello World</code> in up to 4 different languages using <code>if..</code> and <code>else if..</code> expressions.</li>
+<li>In the program above, try to alter the value of the <code>language</code> variable after the initial declaration. Read through the compilation error and see how descriptive and helpful the Rust compiler messages are. Then change the declaration of <code>language</code> variable to  <code>mutable</code> , and see the results.</li>
+</ol>
+<h1><a class="header" href="#loops-say-hello-continually" id="loops-say-hello-continually">Loops: Say hello continually</a></h1>
+<h3><a class="header" href="#what-will-you-learn-2" id="what-will-you-learn-2">What will you learn?</a></h3>
+<p>Three types of loops for repeated operations and calculations- loops, while and for</p>
+<h3><a class="header" href="#activity-2" id="activity-2">Activity</a></h3>
+<ul>
+<li>Write a program to print Hello World multiple times.</li>
+</ul>
+<h3><a class="header" href="#anatomy-of-code-2" id="anatomy-of-code-2">Anatomy of code</a></h3>
+<p>To execute a block of code multiple times, Rust has the control flow feature called loops. There are three types of loops in Rust: <strong>loop</strong>, <strong>while</strong> and <strong>for</strong>.</p>
+<p>We will first look at the <strong>loop</strong>.<br />
+The loop keyword denotes an  infinite, unconditional loop .</p>
+<pre><code>fn main() {
+   loop {
+       println!(&quot;Hello world!&quot;);
+   }
+}
+</code></pre>
+<p>If you execute this program, you will see <code>Hello world</code> printed repeatedly in your terminal, until you stop the program with <strong>ctrl+c</strong>.  Such a program seems pretty pointless at first glance, but this is more or less how long-running services operate, e.g., web application,   api , smtp servers which keep listening for incoming requests in a continuous loop.</p>
+<p>You can use the <strong>break</strong> statement to exit the loop, and continue to move to the next iteration in loop as shown in example below.</p>
+<pre><code>fn main() {
+ let mut number_of_times = 0; 
+   // Infinite loop
+   loop {
+       number_of_times += 1;
+       if number_of_times == 1 {
+           println!(&quot;Hello {} time&quot;, number_of_times);
+           // Skip the rest of this iteration
+           continue;
+       }
+       if number_of_times == 3 {
+           println!(&quot;Goodbye {} times&quot;, number_of_times);
+           // Exit this loop
+           break;
+       }
+   }
+}
+</code></pre>
+<p>Let us next look at conditional loops with the <strong>while</strong> keyword. It is used to check for a condition inside the loop.</p>
+<pre><code>fn main() {
+   let mut number_of_times = 5;
+   while number_of_times &gt; 0 {
+       println!(&quot;Hello World&quot;);
+       number_of_times -= 1;
+   }
+   println!(&quot;Good bye!!!&quot;);
+}
+</code></pre>
+<p>If you run the program, you will see <code>Hello World</code> printed five times in the terminal, followed by <code>Good bye</code>.</p>
+<p>The last type of looping construct we will see is the <strong>for</strong> loop.</p>
+<pre><code>fn main() {
+   let greetings = [&quot;Hello&quot;, &quot;Hola&quot;, &quot;Bonjour&quot;, &quot;Hallo&quot;, &quot;こんにちは&quot;];
+   for greeting in greetings.iter() {
+       println!(&quot;{}&quot;, greeting);
+   }
+}
+</code></pre>
+<p><code>For.. in</code> loop is a very safe and concise way to iterate through collections. The <strong>iter()</strong> method is available over collection data types , such as the array and this makes it very pleasant to write and read code compared to equivalent <strong>for loop</strong> constructs in many other programming languages.<br />
+If you run the program, you will see each element of the <code>greetings</code> array printed in a sequence as the <code>for</code> loop executes.<br />
+Another way to use the <code>for</code> loop is to use a range notation <code>x..y</code>, as follows:</p>
+<pre><code>for n in 1..5 {
+ println!(&quot;Hello world {}&quot;,n)
+}
+</code></pre>
+<h3><a class="header" href="#tasks-for-you-2" id="tasks-for-you-2">Tasks for you</a></h3>
+<ol>
+<li>Declare an array with a list of names. Use a suitable looping construct to iterate through the array and print out a greeting for each name.</li>
+<li>Write a program to iterate through numbers 1 to 100 and print out  the square of the number  if the number is even, and the cube of the number if the number is odd.</li>
+</ol>
+<h1><a class="header" href="#functions--closures-say-hello-smartly" id="functions--closures-say-hello-smartly">Functions &amp; closures: Say hello smartly</a></h1>
+<h3><a class="header" href="#what-will-you-learn-3" id="what-will-you-learn-3">What will you learn?</a></h3>
+<ol>
+<li>Functions</li>
+<li>Closures</li>
+</ol>
+<h3><a class="header" href="#activity-3" id="activity-3">Activity</a></h3>
+<ul>
+<li>Write a program to print Hello World using functions and closures</li>
+</ul>
+<h3><a class="header" href="#anatomy-of-code-3" id="anatomy-of-code-3">Anatomy of code</a></h3>
+<p>Functions are blocks of code that are identified by a name. We have seen earlier that every Rust program starts with the <code>main()</code> function. Here is a simple example of how to define and invoke a function in Rust.</p>
+<pre><code>fn main() {
+ say_hello();
+}
+fn say_hello() {
+println!(&quot;Hello World - I'm functional&quot;);
+}
+</code></pre>
+<p>Function declarations start with the <code>fn</code> keyword, followed by a set of <strong>parentheses</strong> to enclose optional parameters passed to the function, and then a set of <strong>curly braces</strong> to enclose the actual code.  Parameters indicate the variables that are declared as part of a function’s signature.</p>
+<p>To invoke the function, use the function name followed by a set of parentheses with optional arguments. Arguments represent the concrete values that are passed to the function at time of invocation. The example below demonstrates how to pass parameters to a function. Note that in function declaration, the data type of parameters is mandatory. This is a safety feature because the compiler can then check for discrepancies in usage and provide warning.</p>
+<pre><code>fn main() {
+ let language = &quot;German&quot;;
+ say_hello(language);
+}
+fn say_hello(lang: &amp;str) {
+println!(&quot;Hello World - I'm learning {}&quot;, lang);
+}
+</code></pre>
+<p>Note that function names use snake case. Functions can be declared anywhere in the source code.<br />
+Within the body of the function, statements and expressions can be specified. Recall that a statement is an instruction to the computer to perform some actions and statements do not return a value. In the previous example, printing out a value within the <code>say_hello</code> function code is an example of a statement, as it does not return any value. Note that statements end with a semicolon.<br />
+On the other hand, expressions are computations that evaluate to a value which can be returned.<br />
+Let us alter the previous code to have the <code>say_hello</code> function return a value, instead of printing it out.</p>
+<pre><code>fn main() {
+ let language = &quot;German&quot;;
+ println!(&quot;{}&quot;,say_hello(language));
+}
+fn say_hello(lang: &amp;str) -&gt; String {
+format!(&quot;{} {}&quot;, &quot;Hello I'm learning&quot; , lang)
+}
+</code></pre>
+<p>In the example above, note the following:<br />
+We have added a return value from the <code>say_hello</code> function using the <code>-&gt; String</code> annotation to denote that the return value from the function is a value of type <code>String</code>.<br />
+We are using the <code>format!</code> macro to concatenate a fixed string with the value passed to the function for <code>lang</code> parameter. This is an example of an expression within function code because it evaluates to a value. The value so evaluated is returned from the function. Note the lack of  explicit return statement specified within the function, and also the absence of a semicolon at the end of the <code>format!</code> indicates to Rust that this is an expression and the value computed by the expression is automatically returned from the function.<br />
+Let us now take a look at another concept in Rust , <strong>closures</strong>.
+<strong>Closures</strong> are similar to <strong>functions</strong>, with a few key differences. Let us look at some code  first.</p>
+<pre><code>fn main() {
+  // Closure declaration
+ let print_hello = |lang: &amp;str| {
+   println!(&quot;{}&quot;, format!(&quot;{} {}&quot;, &quot;Hello I'm learning&quot; , lang))};
+// Call the closure with language as argument
+ print_hello(&quot;German&quot;);
+ print_hello(&quot;French&quot;)
+}
+</code></pre>
+<p>We are declaring a <strong>closure</strong> which is <strong>anonymous</strong> , i.e., it does not have an identifier, unlike a function. The closure accepts a parameter <code>lang</code> of string literal type, concatenates a fixed string to the <code>lang</code> parameter (using the <code>format!</code> macro), and then prints it out to the terminal (with the <code>println!</code> macro).<br />
+The <strong>closure</strong> itself is stored in a variable called <code>print_hello</code> and is not executed at time of declaration of the <code>print_hello</code> variable. Instead,  the <strong>closure</strong> is executed only when we call the closure using <code>print_hello(“German”)</code> or <code>print_hello(“French”)</code>.<br />
+Interestingly in <strong>closures</strong>, we don’t even have to explicitly pass the input parameter, because <strong>closures</strong> have the ability to ‘capture’ the outer environment variables. So the following code also would work.</p>
+<pre><code>fn main() {
+  let lang = &quot;German&quot;;
+ // Closure declaration
+ let print_hello = ||
+   println!(&quot;{}&quot;, format!(&quot;{} {}&quot;, &quot;Hello I'm learning&quot; , lang));
+// Call the closure with language as argument
+ print_hello();
+}
+</code></pre>
+<p>Note that we are not passing the <code>lang</code> argument when we invoke the <code>print_hello()</code> <strong>closure</strong>. Also in the definition of <strong>closure</strong>, we are not specifying any input parameters (denoted by | | ), but the <strong>closure</strong> definition is able to ‘capture the lang parameter from its surrounding environment’.<br />
+We can summarize the key difference between <strong>functions</strong> and <strong>closures</strong> based on the examples above:</p>
+<ol>
+<li>Closures are functions that can capture values from the surrounding (or enclosing) environment.</li>
+<li>Closures are anonymous (i.e. they are not named like functions)</li>
+<li>Closures also take input parameters (optionally) .</li>
+<li>Closure return values can be inferred automatically.</li>
+<li>Usage of | | instead of ( ) to enclose input arguments</li>
+<li>Function body required to be enclosed in { } but this is optional for closures when there is only a single expression.</li>
+</ol>
+<h3><a class="header" href="#tasks-for-you-3" id="tasks-for-you-3">Tasks for you</a></h3>
+<ol>
+<li>Write a <strong>function</strong> called <code>get_lang_string</code> that takes a <code>language</code> parameter and returns a string containing a greeting in that language.  Invoke this function from <code>main()</code> and print out the value received from function.</li>
+<li>Write the same function as a <strong>closure</strong> and invoke it.</li>
+</ol>
+<h1><a class="header" href="#data-types-and-immutability" id="data-types-and-immutability">Data types and immutability</a></h1>
+<p>This section covers the various built-in data types in Rust and their properties.</p>
+<h1><a class="header" href="#data-types--lets-play-a-betting-game" id="data-types--lets-play-a-betting-game">Data types : Let's play a betting game</a></h1>
+<h3><a class="header" href="#what-will-you-learn-4" id="what-will-you-learn-4">What will you learn?</a></h3>
+<ol>
+<li>Data types in Rust - scalar and compound types</li>
+</ol>
+<h3><a class="header" href="#activity-4" id="activity-4">Activity</a></h3>
+<ul>
+<li>Write a program to print Hello World using functions and closures</li>
+</ul>
+<h3><a class="header" href="#anatomy-of-code-4" id="anatomy-of-code-4">Anatomy of code</a></h3>
+<p>Let us understand how variables are declared with a specific type.
+In Rust, every value which is part of a program is of a particular data type. This is because Rust is a statically typed language and the compiler must be told (or must be able to infer) the data type of every single value while creating a binary or library. Broadly, there are two categories of data types in Rust- <strong>scalar</strong> and <strong>compound</strong>.</p>
+<p>A variable of <strong>scalar data type</strong> holds a single value while a variable of <strong>compound type</strong> holds multiple values.</p>
+<p>There are four <strong>scalar</strong> data types - <strong>integers</strong>, <strong>floating point numbers</strong>, <strong>booleans</strong> and <strong>characters</strong>.</p>
+<ul>
+<li>
+<p><strong>Integers</strong> are non-decimal numbers that can be either positive or negative. </p>
+</li>
+<li>
+<p><strong>Floats</strong> are decimal numbers.</p>
+</li>
+<li>
+<p><strong>Boolean</strong> is a type that can have either of only two values - true or false.</p>
+</li>
+<li>
+<p>A <strong>character</strong> stores a single alphabet or letter (internally using  its corresponding unicode value).</p>
+</li>
+</ul>
+<p>There are two <strong>compound</strong> data types - <strong>tuples</strong> and <strong>arrays</strong>.</p>
+<ul>
+<li>
+<p>A <strong>tuple</strong> is a collection of values of different types.</p>
+</li>
+<li>
+<p>An <strong>array</strong> is a collection of values of the same type.</p>
+</li>
+</ul>
+<p>Let us look at examples of declaring each of these data types in code listing below:</p>
+<pre><code> 1 fn main() {
+ 2     // Declare a variable x of type unsigned integer of length 8 bits , and initialize it with value -5.
+ 3     let x: i8 = -5;
+ 4
+ 5     // Similarly i16, 132, i64 and i128 represent data types of length 16-bits, 32-bits, 64-bits and 128-bits respectively
+ 6
+ 7     // Declare a variable x of type signed integer of length 8 bits , and initialize it with value 5
+ 8     let y: u8 = 5;
+ 9
+10     // Similarly u16, u32, u64 and u128 represent data types of length 16-bits, 32-bits, 64-bits and 128-bits respectively
+11
+12     // Declare a variable of single-precision floating point data type and initialize it with value of 5.0
+13     let z: f32 = 5.0;
+14     // Similarly f64 represents double precision floating point data type
+15     println!(&quot;{},{},{:.1}&quot;, x, y, z);
+16
+17     // Declare a variable of type Boolean
+18     let am_i_successful: bool = true;
+19
+20     // Declare a variable of type character and initialize it with a letter
+21     let this_is_a_char: char = 'r';
+22
+23     println!(&quot;{}.{}&quot;, am_i_successful, this_is_a_char);
+24
+25     // Declare a variable of type tuple and initialize it.
+26     let this_is_a_tuple: (u8, bool, char) = (2, false, 'c');
+27     println!(&quot;The value of tuple is {:?}&quot;, this_is_a_tuple);
+28
+29     // Declare a variable of type arrray and initialize it
+30     let inner_planets: [&amp;str; 4] = [&quot;Mercury&quot;, &quot;Venus&quot;, &quot;Earth&quot;, &quot;Mars&quot;];
+31     println!(&quot;Inner planets are {:?}&quot;, inner_planets);
+32     //Access the second element of the inner_planets array
+33     println!(&quot;2nd inner planet is {:?}&quot;, inner_planets[1]);
+34 }
+
+</code></pre>
+<p>Let’s first define the type of betting system. This program will implement the following betting logic:</p>
+<ol>
+<li>
+<p>Generate a random number between 1 and 100.</p>
+</li>
+<li>
+<p>Accept inputs from user whether the number generated is less than or greater than 50.</p>
+</li>
+<li>
+<p>Compare user input with number generated.</p>
+</li>
+<li>
+<p>Print a result on terminal to say whether the user has won or lost the bet.</p>
+</li>
+</ol>
+<p>This is a fairly simple program, but we can illustrate several key Rust concepts using this example.</p>
+<p>First we need to figure out how to generate a random number. For this, we can use a built-in function in Rust. Built-in functions can be found in the Rust <strong>standard library</strong>. The functions in standard library are organised in the form:</p>
+<p><strong>std::module_name::function_name</strong></p>
+<p>Rust standard Library documentation is available <a href="https://doc.rust-lang.org/std/">here</a>. But there is no suitable function available in the standard library for random number generation. So will use a third party library (called a <strong>crate</strong> in Rust lingo). Let's walk through the code:</p>
+<pre><code>  1 use rand::Rng;
+  2 use std::env;
+  3 fn main() {
+  4     // Generate a random number between 1 and 100
+  5     let random_number = generate_random_number();
+  6 
+  7     println!(&quot;Random num is {} &quot;, random_number);
+  8 
+  9     let user_input = get_user_input();
+ 10 
+ 11     println!(&quot;User input is {}&quot;, user_input);
+ 12 
+ 13     if (user_input == random_number) {
+ 14         println!(&quot;Congratulations, you will get 10 times your money&quot;);
+ 15     } else {
+ 16         println!(&quot;Sorry, you lose. I will now take your money&quot;)
+ 17     }
+ 18 }
+ 19 
+ 20 fn generate_random_number() -&gt; u8 {
+ 21     let mut rng = rand::thread_rng();
+ 22     rng.gen_range(1, 6)
+ 23 }
+ 24 
+ 25 fn get_user_input() -&gt; u8 {
+ 26     let user_input = env::args().nth(1).unwrap();
+ 27     let to_number: u8 = user_input.parse().expect(&quot;Not a number&quot;);
+ 28     to_number
+ 29 }
+</code></pre>
+<p>Lines 1-2 show the imports we are making to bring in Rand crate module and a standard library module into the scope of this source code.</p>
+<p>Lines 3 - 18 correspond to the <code>main( )</code> function.</p>
+<p>Lines 20-23 and 25-29 are the two functions for generating random number and to get user input from command line, respectively.</p>
+<p>In the <code>main( )</code> function, lines 5 and 9 contain code to call the two functions to get random number generated and to get user inputs.</p>
+<p>Lines 13-17 show the control flow code to check if the user input matches the random number generated, and print out appropriate messages.</p>
+<p>It is a simple program, but serves to demonstrate the concepts discussed so far.</p>
+<h3><a class="header" href="#tasks-for-you-4" id="tasks-for-you-4">Tasks for you</a></h3>
+<ol>
+<li>Extend the betting program to do the following:</li>
+</ol>
+<ul>
+<li>Accept 2 pieces of user input - number guessed and bet amount placed. eg user can bet on number 6 with $100.</li>
+<li>Generate the random number after accepting the user inputs</li>
+<li>If the number guessed is correct, return to user an amount equal to double of the bet placed by user. If the number guessed is within 2 numbers of random number generated, then print message stating that 90% of bet placed will be returned. Otherwise, print a message stating user lost the bet.</li>
+</ul>
+<ol start="2">
+<li>Extend program above to take 3 inputs from user and check if any of the numbers match the random number generated (Hint: use arrays). Display messages to user accordingly.</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
