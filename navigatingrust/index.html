@@ -148,11 +148,23 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#navigating-rust---foreword" id="navigating-rust---foreword">Navigating Rust - Foreword</a></h1>
-<p>This is <strong>YABG (yet another beginners's guide)</strong> to learning the beautiful Rust programming language. </p>
-<p>I've tried to write this in a way I would have liked to learn Rust when I started learning.</p>
+<p>This is <strong>YABG (yet another beginners's guide)</strong> to learn the beautiful Rust programming language. Compared to the <a href="https://doc.rust-lang.org/book/title-page.html">official Rust Book</a>, this is meant to be a gentler introduction to the language for those who want to get a flavour of the various aspects of the language, before diving deep in.</p>
+<p><em>After you finish this guide, you should still go back and read the entire official Rust Book cover to cover, atleast 2 times. You will then be ready to start programming in Rust.</em></p>
+<p>I've tried to write this guide in a way I would have liked to learn Rust when I started learning. You may find portions of this guide a tad opinionated at times. I assure you, it is intentional. </p>
 <p>This guide is completely free, no strings attached. I wrote it as a small contribution back to the fabulous and selfless open source community which has given me so much, and to the contributors, thinkers &amp; makers of the beautiful Rust language - thank you so much.</p>
-<p>Please send me feedback , issues and suggestions to <strong>prabhu.eshwarla@sudhanvatech.com</strong> or issue a pull request at the <a href="https://github.com/peshwar9/peshwar9.github.io.git">github repo</a>, so I can make the guide better for you.</p>
 <p><strong>Note:</strong> This guide is work in progress. </p>
+<p>Please send me feedback , issues and suggestions to <strong>prabhu.eshwarla@sudhanvatech.com</strong> or issue a pull request at the <a href="https://github.com/peshwar9/peshwar9.github.io.git">github repo</a>, so I can make the guide better for you.</p>
+<p>You can follow along with this guide in two ways:</p>
+<ol>
+<li>
+<p>Copy and past the code from this guide into <a href="https://play.rust-lang.org">Rust online playground</a></p>
+</li>
+<li>
+<p>Setup your local development environment by installing Rust and cargo locally. Official instructions for installation can be found <a href="https://doc.rust-lang.org/book/ch01-01-installation.html">here</a>.</p>
+</li>
+</ol>
+<p>This guide is structured as a set of sections containing logically grouped lessons of gradually increasing complexity. There are also suggested exercises at end of each lesson,  as there are three possible ways you can learn to code in Rust - 1) write some code, 2) write some code or 3) write some code.</p>
+<p>Let's get started.</p>
 
                     </main>
 
@@ -183,6 +195,21 @@
 
         </div>
 
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3001");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         
 
         
