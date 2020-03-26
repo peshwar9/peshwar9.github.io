@@ -1,5 +1,6 @@
 # Summary
 
+[Navigating Rust - Foreword](foreword.md)
 - [Program structure and control](section_1.md)
     - [Say hello!](./lesson_1_1.md)
     - [Control flow : Say hello conditionally](./lesson_1_2.md)
