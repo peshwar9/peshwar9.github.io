@@ -11,7 +11,7 @@ This guide is completely free, no strings attached. I wrote it as a small contri
 
 
 
-Please send me feedback , issues and suggestions to **prabhu.eshwarla@sudhanvatech.com** or issue a pull request at the [github repo](https://github.com/peshwar9/peshwar9.github.io.git), so I can make the guide better for you.  
+Please send me feedback , issues and suggestions by raising a pull request at the [github repo](https://github.com/peshwar9/peshwar9.github.io.git), so I can make the guide better for you.  
 
 You can follow along with this guide in two ways:  
 

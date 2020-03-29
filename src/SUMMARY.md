@@ -8,3 +8,4 @@
     - [Functions & closures: Say hello smartly](./lesson_1_4.md)
 - [Data types and immutablity](./section_2.md)
     - [Data types: Let's play a betting game](./lesson_2_1.md)
+    - [Data types: Ownership](./lesson_2_2.md)
