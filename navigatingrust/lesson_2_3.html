@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Data types: Borrowing and references - Navigating Rust - Beginner's Guide</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="foreword.html">Navigating Rust - Foreword</a></li><li class="expanded "><a href="section_1.html"><strong aria-hidden="true">1.</strong> Program structure and control</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_1_1.html"><strong aria-hidden="true">1.1.</strong> Say hello!</a></li><li class=""><a href="lesson_1_2.html"><strong aria-hidden="true">1.2.</strong> Control flow : Say hello conditionally</a></li><li class=""><a href="lesson_1_3.html"><strong aria-hidden="true">1.3.</strong> Loops: Say hello continually</a></li><li class=""><a href="lesson_1_4.html"><strong aria-hidden="true">1.4.</strong> Functions &amp; closures: Say hello smartly</a></li></ol></li><li class="expanded "><a href="section_2.html"><strong aria-hidden="true">2.</strong> Data types and Ownership</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_2_1.html"><strong aria-hidden="true">2.1.</strong> Data types: Let's play a betting game</a></li><li class=""><a href="lesson_2_2.html"><strong aria-hidden="true">2.2.</strong> Data types: Ownership</a></li><li class="expanded "><a href="lesson_2_3.html" class="active"><strong aria-hidden="true">2.3.</strong> Data types: Borrowing and references</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Navigating Rust - Beginner's Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#data-types-borrowing--references" id="data-types-borrowing--references">Data types: Borrowing &amp; References</a></h1>
+<h3><a class="header" href="#what-will-you-learn" id="what-will-you-learn">What will you learn?</a></h3>
+<ol>
+<li>Borrrowing and references in Rust</li>
+</ol>
+<h3><a class="header" href="#activity" id="activity">Activity</a></h3>
+<ul>
+<li>Write programs to demonstrate ownership concept in Rust.</li>
+</ul>
+<p><strong>Immutable references</strong></p>
+<p>We saw previously that in Rust, when we pass a variable as a parameter to a function, the ownership of the value associated with the variable is moved to the function.</p>
+<p><em>What if we don’t want the function to take ownership of the value but just use the value (for whatever purpose)?</em></p>
+<p>Rust makes allowance for this, and it is called <strong>borrowing</strong>.</p>
+<p>Let’s look at the following code.</p>
+<pre><code>fn main() {
+    // String type
+    let s = String::from(&quot;Why is Rust so popular?&quot;);
+    print_sentence(&amp;s);
+    println!(&quot;In main: {}&quot;, s)
+} // x goes out of scope here
+
+fn print_sentence(s: &amp;String) {
+    println!(&quot;In function {}&quot;, s);
+}
+
+</code></pre>
+<p>The string s is not directly passed to function print_sentence, but a reference to string s is passed instead. What is a reference?  A reference is simply a pointer to the value stored in s. As a result, here the value of s is not moved into the function while invoking it, but only an immutable reference to that value is passed to the function.</p>
+<p>Note the function signature of print_sentence. It accepts a parameters that is a reference to a String. When the program runs, you will see the string printed twice, once from within the <code>print_sentence</code> function and once within the <code>main ()</code> function. The fact that variable s can be accessed within the <code>main()</code> function after function invocation shows that the variable <strong>s</strong> is intact and its value is not moved to <code>print_sentence</code> function.</p>
+<p>The <em>ampersand &amp;</em> symbol is used to denote a reference, and refers to a value without taking ownership of it.</p>
+<p><em>Why are references important?</em> Without them, everytime a parameter is passed to a function, it needs to be explicitly returned back to the calling function in order to make use of it elsewhere in code.</p>
+<p><strong>Mutable references</strong></p>
+<p>What if the function wants to modify the value of the input parameter without taking ownership of it? There is a solution for that, and it's called mutable reference. </p>
+<pre><code>fn main() {
+    // String type
+    let mut s = String::from(&quot;Why is Rust so popular?&quot;);
+    print_sentence(&amp;mut s);
+    println!(&quot;In main: {}&quot;, s)
+} // x goes out of scope here
+
+fn print_sentence(s: &amp;mut String) {
+    s.push_str(&quot;Because it's great&quot;);
+    println!(&quot;In function {}&quot;, s);
+}
+</code></pre>
+<p>In code above, string s is declared as a mutable variable and also the function signature is changed to accept a mutable reference to a String. Within the function print_sentence, the value of s is mutated to append a string literal. You will notice that even after the function returns, in the main function, the mutated value of string s is visible and available.</p>
+<p>Having mutable references looks convenient, but can be dangerous too. So Rust imposes the following rules so that mutable references cannot be used indiscriminately:</p>
+<ol>
+<li>At any given time, you can have either one mutable reference or any number of immutable references.</li>
+<li>References must always be valid</li>
+</ol>
+<p>Let us test the first rule through some code.</p>
+<pre><code>fn main() {
+    // String type
+    let s = String::from(&quot;Why is Rust so popular?&quot;);
+
+    let x = &amp;s;
+    let y = &amp;s;
+
+    println!(&quot;x is {} and y is {}&quot;, x, y);
+} 
+
+</code></pre>
+<p>In code above, we create two variables x and y both of which take immutable references to the same string <strong>s</strong>. The print statement will print the same string for both <strong>x</strong> and <strong>y</strong>.</p>
+<p>What we have proven through this code is that it is accceptable to have more than one immutable reference to the same value.</p>
+<p>In following code, we declare the variable s as mutable. x is declared as immutable reference to s , while y is declared as a mutable reference to s. What happens when you execute this code?</p>
+<pre><code>fn main() {
+    // String type
+    let mut s = String::from(&quot;Why is Rust so popular?&quot;);
+
+    let x = &amp;s;
+    let y = &amp;mut s;
+
+    println!(&quot;x is {} and y is {}&quot;, x, y);
+} // x and y go out of scope here
+</code></pre>
+<p>You will notice that the compiler throws up an error. This is because Rust does not allow both a mutable reference and immutable reference to the same value in the same scope. It does not make sense to declare x as immutable reference and then have the underlying value of string change through a mutable reference y. </p>
+<p>If we were to extend this example and declare both x and y are mutable variables, again Rust compiler would complain. This is because such code can lead to data race situation, where more than one variable may be  trying to alter the same variable at the same time. This problem can become conspicuous in a multi-threaded scenario where a data element is accessed for mutation by multiple threads without any synchronisation mechanism. </p>
+<p>So, there would be no memory safety if this were to be allowed.</p>
+<p>Hence the first rule for using references is:</p>
+<ol>
+<li>In any given scope, you can have either one mutable reference or any number of immutable references.</li>
+</ol>
+<p>One thing to note is how Rust interprets <strong>scope</strong>. It is intuitive to think of variables enclosed within the same pair of curly braces as part of same scope. But Rust applies another rule also. For Rust, a reference’s scope starts from where it is introduced and continues through the last time that reference is used. So, if we modify example above to split the println statements for x and y as below, you will find that Rust compiler will not complain. This is because, once the first println! macro is executed, the value of x goes out of scope (as it is not used again in the program), so the second mutable reference statement would be accepted as this is the only reference remaining in the program scope.</p>
+<pre><code>fn main() {
+    // String type
+    let mut s = String::from(&quot;Why is Rust so popular?&quot;);
+
+    let x = &amp;s;
+    println!(&quot;x is {} &quot;, x); // x goes out of scope here
+
+    let y = &amp;mut s;
+
+    println!(&quot; y is {}&quot;, y);
+} // y goes out of scope here
+</code></pre>
+<p>We have seen that Rust will not even compile code with data race conditions! Compare this with other languages where the developer has to debug issues due to data race conditions.</p>
+<h3><a class="header" href="#slice-data-type" id="slice-data-type">Slice data type</a></h3>
+<p>We have seen how passing a reference to a heap-allocated variable is a way to avoid transferring ownership of that value. We also saw that there are two types of references that can be used - mutable reference and immutable reference.</p>
+<p>We will now look at yet another way to use variables without taking ownership. Rust provides a special data type that is designed to resist ownership. It is the <strong>Slice data type</strong>. A slice , as the word implies, is a portion of data. A string slice is a reference to a part of a string (which is ). An integer slice is a view into an underlying array of integers.</p>
+<p>Let us understand this through a code example.</p>
+<pre><code>fn main() {
+    // String type
+    let mut s = String::from(&quot;Why is Rust so popular?&quot;);
+
+    let slice1 = &amp;s[0..3];
+    let slice2 = &amp;s[4..];
+    let slice3 = &amp;s[..];
+
+    println!(&quot;slice 1 is {} &quot;, slice1);
+    println!(&quot;slice 2 is {} &quot;, slice2);
+    println!(&quot;slice 3 is {} &quot;, slice3);
+
+    println!(&quot;original slice is {} &quot;, s);
+} 
+</code></pre>
+<p>We declared three different slices into the string <strong>s</strong>. <strong>Slice1</strong> is a view into the first 4 characters of string <strong>s</strong>, <strong>slice2</strong> is a view into all characters of string <strong>s</strong>  starting from the fifth character (not arrays are zero-indexed), and <strong>slice 3</strong> simply says create a view of all characters in string <strong>s</strong>.</p>
+<p>When a slice is created, is it like an immutable reference to the string, or is a new copy of the data created? Let us find out. </p>
+<pre><code>fn main() {
+    // String type
+    let mut s = String::from(&quot;Why is Rust so popular?&quot;);
+
+    let y = &amp;mut s;
+
+    println!(&quot; y is {:p}&quot;, y.as_ptr());
+
+    let slice1 = &amp;s[0..3];
+    let slice2 = &amp;s[5..];
+    let slice3 = &amp;s[..8];
+
+    println!(&quot;original string is {:p} &quot;, s.as_ptr());
+    println!(&quot;slice 1 is {:p} &quot;, slice1.as_ptr());
+    println!(&quot;slice 2 is {:p} &quot;, slice2.as_ptr());
+    println!(&quot;slice 3 is {:p} &quot;, slice3.as_ptr());
+} 
+
+</code></pre>
+<pre><code>This is the output of the function:(you may see different memory addresses):
+y is 0x55f4a61cda40
+original string is 0x55f4a61cda40 
+slice 1 is 0x55f4a61cda40 
+slice 2 is 0x55f4a61cda45 
+slice 3 is 0x55f4a61cda40
+</code></pre>
+<p>In code above, we declared a mutable reference to the string s, and also declare three slices over the same string s. If slices were treated as immutable references,then the code below should be disallowed by compiler because one cannot have both a mutable reference and immutable reference to same string in same scope. But surprisingly the compiler is happy with this code. This shows that slices are NOT treated like immutable references by Rust. Then what are they and where are they stored? In code above we also printed out the memory locations of original string s, mutable reference y, and the three slices - slice1, slice2 and slice3. </p>
+<p>It is surprising that slices 1 , 2 and 3 are pointing to the same memory address area as the original string s. (slice2 has a different memory address to adjust for the offset of 5 bytes, as we created slice2 by reading from byte 5 of string s) This shows that creating a slice does not duplicate the value in another area of heap. At the same time, slices are also not immutable references, as we saw above.  Slices are simply a different type of creature in Rust, basically a different data type.</p>
+<h3><a class="header" href="#summary-of-memory-safety-in-rust" id="summary-of-memory-safety-in-rust">Summary of memory safety in Rust</a></h3>
+<p>We have seen how through features such as Ownership, borrowing, references and slices,  Rust provides memory safety at compile time. We saw how Rust avoids <em>double free</em> memory errors through Ownership rules, and <em>data race</em> errors through borrowing &amp; reference rules. </p>
+<p>To take a simple (crude) analogy of using a meeting room, let us say you walk into a meeting room and use the projector, lights and whiteboard. After the meeting when you leave the room , let's see what happens in the context of different programming languages:</p>
+<ol>
+<li>In C/C++, you have to manually switch off the projector, turn off the lights and clean the whiteboard.</li>
+<li>In high-level languages such as Java/C#,Ruby,Python etc, we use a cleaning service (called garbage collector) to clean up after you leave.</li>
+<li>In Rust, you neither have to clean up manually, nor employ a cleaning service. Instead, there are sensors that detect when you leave the room, the projector switches off , the lights turn off and there is a self-cleaning white board with motors, cleaning rod, cleaning head and control panel. All this is possible using the fantastic Rust compiler!</li>
+</ol>
+<p>Memory management in Rust is roughly analogous to this.</p>
+<p>Let us now see how Rust prevents another class of memory errors - dangling references.  Rust achieves this through the concept of <strong>lifetimes</strong>. We will see this in a future lesson. </p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="lesson_2_2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="lesson_2_2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3001");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
