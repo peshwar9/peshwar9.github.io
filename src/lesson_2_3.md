@@ -183,9 +183,78 @@ slice 1 is 0x55f4a61cda40
 slice 2 is 0x55f4a61cda45 
 slice 3 is 0x55f4a61cda40
 ```
-In code above, we declared a mutable reference to the string s, and also declare three slices over the same string s. If slices were treated as immutable references,then the code below should be disallowed by compiler because one cannot have both a mutable reference and immutable reference to same string in same scope. But surprisingly the compiler is happy with this code. This shows that slices are NOT treated like immutable references by Rust. Then what are they and where are they stored? In code above we also printed out the memory locations of original string s, mutable reference y, and the three slices - slice1, slice2 and slice3. 
+In code above, we declared a mutable reference to the string s, and also declare three slices over the same string s. If slices were treated as immutable references,then the code below should be disallowed by compiler because one cannot have both a mutable reference and immutable reference to same string in same scope. But surprisingly the compiler is happy with this code. Does this mean that slices are NOT treated like immutable references by Rust? Let us try to find out, by just add one more line to the previous example to print value of y at the end of the program. You will see that the compiler now throws an error. The updated code and error messages are shown below:
 
-It is surprising that slices 1 , 2 and 3 are pointing to the same memory address area as the original string s. (slice2 has a different memory address to adjust for the offset of 5 bytes, as we created slice2 by reading from byte 5 of string s) This shows that creating a slice does not duplicate the value in another area of heap. At the same time, slices are also not immutable references, as we saw above.  Slices are simply a different type of creature in Rust, basically a different data type.
+```
+fn main() {
+    // String type
+    let mut s = String::from("Why is Rust so popular?");
+
+    let y = &mut s;
+
+    println!(" y is {:p}", y.as_ptr());
+
+    let slice1 = &s[0..3];
+    let slice2 = &s[5..];
+    let slice3 = &s[..8];
+
+    println!("original string is {:p} ", s.as_ptr());
+    println!("slice 1 is {:p} ", slice1.as_ptr());
+    println!("slice 2 is {:p} ", slice2.as_ptr());
+    println!("slice 3 is {:p} ", slice3.as_ptr());
+    
+    println!("{}", y); // New line added
+} 
+```
+
+```
+Compiling playground v0.0.1 (/playground)
+error[E0502]: cannot borrow `s` as immutable because it is also borrowed as mutable
+  --> src/main.rs:9:19
+   |
+5  |     let y = &mut s;
+   |             ------ mutable borrow occurs here
+...
+9  |     let slice1 = &s[0..3];
+   |                   ^ immutable borrow occurs here
+...
+18 |     println!("{}", y);
+   |                    - mutable borrow later used here
+
+error[E0502]: cannot borrow `s` as immutable because it is also borrowed as mutable
+
+```
+We can see that the compiler confirms that when a slice is created, an immutable borrow occurs. So, what is the reason that code in ownership15.rs works, but ownership16.rs does not? What does the addition of the innocuous println! statement really do ? The answer is contained in a concept called non-lexical lifetime. As per normal rules, in snippet ownership15.rs, the variable y should go out of scope only at the end of the main function. This is called lexical scope. But in Rust 2018 edition, Rust has introduced the feature of non-lexical lifetime(scope), due to which the variable y in snippet ownership15.rs goes out of scope even before the slices are declared, as y is not used elsewhere in the program subsequently. But in snippet ownership16.rs, when we add a statement at the end of the program to print the value of y, then the non-lexical lifetime rule does not apply anymore to variable y, and the compiler complains because in this case, the variable y is still in scope of the program when the slices 1–3 are declared.
+
+### Mutable variable vs Mutable reference
+There is another aspect of references that I’d like to highlight. In Rust there is a difference between mutability property of a variable and the mutability property of a reference to the variable. To illustrate this let us make a small change to ownership16.rs (which does not compile, if you recall), to change y from a mutable reference of s to immutable reference of s. You will find that the program now works! This is because even though s is declared as a mutable variable, since y is declared as immutable reference to s, the compiler finds this acceptable as now there are 4 immutable references to s (variables y , slice1, slice2 and slice3), which is as per the ‘law of the land’ in Rust, as there can be any number of immutable references to a variable at the same time in same scope. The code snippet is given below:  
+
+```
+fn main() {
+    // String type
+    let mut s = String::from("Why is Rust so popular?");
+
+    let y = &s; // Change y from mutable pointer to immutable pointer
+
+    println!(" y is {:p}", y.as_ptr());
+
+    let slice1 = &s[0..3];
+    let slice2 = &s[5..];
+    let slice3 = &s[..8];
+
+    println!("original string is {:p} ", s.as_ptr());
+    println!("slice 1 is {:p} ", slice1.as_ptr());
+    println!("slice 2 is {:p} ", slice2.as_ptr());
+    println!("slice 3 is {:p} ", slice3.as_ptr());
+    
+    println!("{}", y);
+} 
+```
+
+### How are slices stored?
+
+Let us now look at how the slices are stored. Is a new value created in a different heap memory area for each slice, or do all the slices point to the original string s?
+In snippet ownership15.rs , the variables s and slices 1–3 are printed as pointers . You can observe from program output (ownership 15b.txt) that slices 1 , 2 and 3 are pointing to the same memory address area as the original string s. (note: slice2 has a different memory address to adjust for the offset of 5 bytes, as we created slice2 by reading from byte 5 of string s, but it is still referring to the same area of memory corresponding to string s). This shows that creating a slice does not duplicate the value in another area of heap.  
 
 ### Summary of memory safety in Rust
 
