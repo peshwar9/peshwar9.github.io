@@ -10,3 +10,4 @@
     - [Data types: Let's play a betting game](./lesson_2_1.md)
     - [Data types: Ownership](./lesson_2_2.md)
     - [Data types: Borrowing and references](./lesson_2_3.md)
+    - [Data types: structs, enums and traits](./lesson_2_4.md)

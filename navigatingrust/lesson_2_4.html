@@ -1,0 +1,681 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Data types: structs, enums and traits - Navigating Rust - Beginner's Guide</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="foreword.html">Navigating Rust - Foreword</a></li><li class="expanded "><a href="section_1.html"><strong aria-hidden="true">1.</strong> Program structure and control</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_1_1.html"><strong aria-hidden="true">1.1.</strong> Say hello!</a></li><li class=""><a href="lesson_1_2.html"><strong aria-hidden="true">1.2.</strong> Control flow : Say hello conditionally</a></li><li class=""><a href="lesson_1_3.html"><strong aria-hidden="true">1.3.</strong> Loops: Say hello continually</a></li><li class=""><a href="lesson_1_4.html"><strong aria-hidden="true">1.4.</strong> Functions &amp; closures: Say hello smartly</a></li></ol></li><li class="expanded "><a href="section_2.html"><strong aria-hidden="true">2.</strong> Data types and Ownership</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class=""><a href="lesson_2_1.html"><strong aria-hidden="true">2.1.</strong> Data types: Let's play a betting game</a></li><li class=""><a href="lesson_2_2.html"><strong aria-hidden="true">2.2.</strong> Data types: Ownership</a></li><li class=""><a href="lesson_2_3.html"><strong aria-hidden="true">2.3.</strong> Data types: Borrowing and references</a></li><li class="expanded "><a href="lesson_2_4.html" class="active"><strong aria-hidden="true">2.4.</strong> Data types: structs, enums and traits</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Navigating Rust - Beginner's Guide</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#data-types-structs-enums-and-traits" id="data-types-structs-enums-and-traits">Data types: structs, enums and traits</a></h1>
+<h3><a class="header" href="#what-will-you-learn" id="what-will-you-learn">What will you learn?</a></h3>
+<ol>
+<li>Structs, enums and traits in Rust</li>
+</ol>
+<h3><a class="header" href="#activity" id="activity">Activity</a></h3>
+<ul>
+<li>Write programs to understand how to define aggregate custom data types in Rust and to specify state and behaviour.</li>
+</ul>
+<h3><a class="header" href="#introduction" id="introduction">Introduction</a></h3>
+<p>Every programming language provides features that enable representation of digital models of real-world objects. Object oriented programming languages achieve this by viewing the world as a set of interacting objects, each with its own behaviour (methods), data (properties) and relationships (inheritance and composition).</p>
+<p>Rust is not an object-oriented programming language, but provides the ability to specify state, behaviour and relationships of objects (run-time entities)in a different way. After all, how can a programming language be useful if it cannot allow us to model real-world objects and their behaviour? If I cannot represent a bank, an airline, a hotel, a car, a user, a tweet, a post , a message, a product or a transaction in a programming language easily, then I cannot do many useful things with it.</p>
+<p>In order to represent a real-world object, we cannot work with primitive data types such as integer, character or boolean. We need aggregate data types that can contain various properties of objects. Take an example of a car. A car could have multiple properties such as registration number (string data type), make &amp; model (strings again) , engine horsepower (integer), fuel type — petrol/diesel (enumeration data type), colour (hex color code), number of passengers (integer), price (float), status (sold/readyForSale) etc. A car can thus be represented as an aggregate data type containing various properties, each of which is either a primitive data type or some other custom-defined data type.</p>
+<h3><a class="header" href="#struct" id="struct">Struct</a></h3>
+<p>Rust allows us to represent an object such as a car in the form of a struct data type , as shown below.</p>
+<pre><code>struct Car {
+ registration_number : String,
+ make: String,
+ model: String,
+ horse_power: u8,
+ fuel_type: String,
+ number_of_passengers: u8,
+ price: f32,
+ status: String
+}
+</code></pre>
+<p>To use a struct after it is defined, it has to be instantiated by specifying values for each of the fields in the struct.</p>
+<pre><code>fn main() {
+    let _car1 = Car {
+        registration_number: String::from(&quot;AST 1234&quot;),
+        make: String::from(&quot;Ferrari&quot;),
+        model: String::from(&quot;F8 Tributo&quot;),
+        horse_power: 710,
+        fuel_type: String::from(&quot;Petrol&quot;),
+        number_of_passengers: 2,
+        price: 293480.0,
+        status: &quot;For Sale&quot;
+    };
+}
+</code></pre>
+<p>The set of values associated with the various fields of <strong>car1</strong> object represents the state of <strong>car1</strong> at any point in time.<br />
+Are structs just static objects, or can they have behaviour associated with them? There are two classes of behaviour a struct can have in Rust — methods and associated functions.</p>
+<p>Here is an example of a method:</p>
+<pre><code>impl Car {
+ fn calculate_price(&amp;self, quantity: u32) -&gt; f32 {
+ let quantity = quantity as f32;
+ self.price * quantity
+ }
+}
+</code></pre>
+<p>Methods are declared with the <strong>fn</strong> keyword and their name. They can have parameters and return value and perform some computation. The first parameter of a method is always <strong>self</strong>, which represents the instance of the struct the method is called on. Struct methods are enclosed within an impl block. (impl stands for implementation).</p>
+<p>Here is how to invoke the method on struct car:</p>
+<pre><code>car1.calculate_price(5) // To calculate price of 5 cars
+</code></pre>
+<p>We can also define an associated function for a struct. Associated function is different from a method in that an associated function is like a static method on an object (for those familiar with OO languages). Associated functions operate on the struct definition while methods operate on a struct instance. Here is an example of an associated function called generate_warranty_statement() for a car, invoked using the double-colon notation on the struct Car.</p>
+<pre><code>Car::generate_warranty_statement()
+</code></pre>
+<p>While the fields defined as part of a struct definition denote the definition of state that is associated with it, the methods and associated functions defined as part of the impl block of the struct denote the behaviour associated with the struct.</p>
+<p>What we have seen so far is a classic struct. There are two other types of structs:</p>
+<ol>
+<li>Tuple struct</li>
+<li>Unit structs</li>
+</ol>
+<p>A car object defined as a tuple struct in rust would look as follows:</p>
+<pre><code>struct Car(String, String, String, u16, String, u8, f32);
+</code></pre>
+<p>Shown below is how to instantiate a tuple struct. Note the main difference between regular and tuple structs is that in the latter , the fields are not named.</p>
+<pre><code>let car2 = Car(
+ String::from(“AST 1234”),
+ String::from(“Ferrari”),
+ String::from(“812 GTS”),
+ 812,
+ String::from(“Petrol”),
+ 2,
+ 293480.0,
+ );
+</code></pre>
+<p>The third type of struct is called Unit struct, and is defined as follows:</p>
+<pre><code>struct Car();
+</code></pre>
+<p>The unit struct is instantiated as follows:</p>
+<pre><code>let car3 = Car();
+</code></pre>
+<p>Unit structs are used in places where there is no field/data to be stored , but useful to specify behaviour of generics, which will be covered in a future post.</p>
+<p>Here is the full code</p>
+<pre><code>// Struct definition showing the fields (state)
+
+struct Car {
+    registration_number: String,
+    make: String,
+    model: String,
+    horse_power: u16,
+    fuel_type: String,
+    number_of_passengers: u8,
+    price: f32,
+}
+
+// Struct methods and associated functions showing behaviour of the struct
+
+impl Car {
+    
+    // This is a method
+    
+    fn calculate_price(&amp;self, quantity: u32) -&gt; f32 {
+        let quantity = quantity as f32;
+        self.price * quantity
+    }
+    
+    // This is an associated function
+
+    fn generate_warranty_statement() -&gt; &amp;'static str {
+        &quot;This car carries a warranty of 5 years against any manufacturing defects&quot;
+    }
+}
+
+// Define a Tuple struct
+
+struct TCar(String, String, String, u16, String, u8, f32);
+
+// Define a unit struct
+
+struct UCar();
+
+fn main() {
+    
+    // Instantiate the car struct
+    
+    let car1 = Car {
+        registration_number: String::from(&quot;AST 1234&quot;),
+        make: String::from(&quot;Ferrari&quot;),
+        model: String::from(&quot;F8 Tributo&quot;),
+        horse_power: 710,
+        fuel_type: String::from(&quot;Petrol&quot;),
+        number_of_passengers: 2,
+        price: 293480.0,
+    };
+    
+    // Instantiate the car tuple struct
+    
+        let _car2 = TCar(
+        String::from(&quot;AST 1234&quot;),
+        String::from(&quot;Ferrari&quot;),
+        String::from(&quot;812 GTS&quot;),
+        812,
+        String::from(&quot;Petrol&quot;),
+        2,
+        293480.0,
+    );
+
+    // Instantiate car unit struct
+    
+    let _car3 = UCar();
+    
+    // Calculate price of 5 Ferrari f8 Tributos.
+    println!(&quot;Price of 5 ferraris is : $ {}&quot;, car1.calculate_price(5));
+    
+    // Generate the warranty statement for all cars sold from this dealer
+
+    println!(
+        &quot;Warranty statement for Ferrari F8 Tributo is : {}&quot;,
+        Car::generate_warranty_statement()
+    );
+}
+</code></pre>
+<h3><a class="header" href="#enum" id="enum">Enum</a></h3>
+<p>Enums or enumerations are custom data types in Rust (like in other mainstream programming languages). the set of values that an enum can take is restricted and predefined. Each possible value an enum can take is called a variant.</p>
+<p>Let us look at how we can use enums. In the example above, in the car struct, we have a field called <strong>fuel_type</strong>. Let’s take the case of the car manufacturer making cars of the following four types: Petrol, Diesel, Electric and Hybrid. Each of these types is called an invariant. Here’s how we would represent it programmatically:</p>
+<pre><code>enum FuelType {
+ Petrol,
+ Diesel,
+ Hybrid,
+ Electric,
+}
+</code></pre>
+<p>Basically we are declaring that there are only four possible fuel types that canbe associated with this enum called FuelType. Next, we need to redefine the Car struct to take a field type of FuelType for field with name fuel_type (instead of String).</p>
+<pre><code>struct Car {
+ registration_number: String,
+ make: String,
+ model: String,
+ horse_power: u16,
+ fuel_type: FuelType, // this was earlier String type 
+ number_of_passengers: u8,
+ price: f32,
+}
+</code></pre>
+<p>This is how we would instantiate the car now:</p>
+<pre><code>let car1 = Car {
+ registration_number: String::from(“AST 1234”),
+ make: String::from(“Ferrari”),
+ model: String::from(“F8 Tributo”),
+ horse_power: 710,
+ fuel_type: FuelType::Petrol, // Note how enum value is assigned 
+ number_of_passengers: 2,
+ price: 293480.0,
+ };
+</code></pre>
+<p>If we try to assign a value to fuel_type that is not one of the 4 defined values in enum FuelType definition, our(friendly) compiler would refuse to accept it.</p>
+<p>Using enums improves code safety because we can be sure that no programmer assigns an invalid value to this field resulting in unpredictable behaviour. Why is this so important? Let’s take an example. Car manufacturers have to perform emission tests on the vehicles to meet regulatory requirements. Each fuel type may have different sets of metrics to be reported. And reporting should cover all vehicles of all fuel types.</p>
+<p>Imagine a case where an invalid fuel type is entered by data entry operator for a batch of cars. These cars would then not even appear in the regulatory reporting which could cause serious compliance issues. An enum is one way to avoid getting into that situation. (this by the way is not an exaggerated scenario, data entry errors happen all the time in enterprise systems leading to many kinds of error scenarios not envisaged at the time the system was designed and developed).</p>
+<p>Enums in Rust have an additional property not common in other programming languages. The variants an enum can take , also can accept some associated data. Again, this is best explained with an example.</p>
+<p>In the previous example, for electric vehicles, let’s assume we also want to track what is the type of battery used by the car, and do some processing based on that. A car battery can be Lithium Ion (Li-Ion), Lithium Sulphur (Li-S) or Nickel Metal Hydride (Ni-MH). How do we specify this in the enum definition? Here is how to do it.</p>
+<pre><code>enum FuelType {
+ Petrol,
+ Diesel,
+ Hybrid,
+ Electric(String),
+}
+</code></pre>
+<p>This is how you would instantiate a new car now:</p>
+<pre><code>let car1 = Car {
+ registration_number: String::from(“AST 1234”),
+ make: String::from(“Ferrari”),
+ model: String::from(“F8 Tributo”),
+ horse_power: 710,
+ engine_type: FuelType::Electric(String::from(“Lithium Ion”)),
+ number_of_passengers: 2,
+ price: 293480.0,
+ };
+</code></pre>
+<p>This feature can be quite useful to do some processing based on battery type.</p>
+<p>Here is the complete code using enums:</p>
+<pre><code>// Define an enum for engine type
+
+#[derive(Debug)]  // this macro enables printing of the value of enum in debug mode
+enum FuelType {
+    Petrol,
+    Diesel,
+    Hybrid,
+    Electric(String),
+}
+
+#[derive(Debug)]
+
+struct Car {
+    registration_number: String,
+    make: String,
+    model: String,
+    horse_power: u16,
+    engine_type: FuelType,
+    number_of_passengers: u8,
+    price: f32,
+}
+
+impl Car {
+    fn calculate_price(&amp;self, quantity: u32) -&gt; f32 {
+        let quantity = quantity as f32;
+        self.price * quantity
+    }
+
+    fn generate_warranty_statement() -&gt; &amp;'static str {
+        &quot;This car carries a warranty of 5 years against any manufacturing defects&quot;
+    }
+}
+
+struct TCar(String, String, String, u16, FuelType, u8, f32);
+
+struct UCar();
+
+
+
+fn main() {
+    let car1 = Car {
+        registration_number: String::from(&quot;AST 1234&quot;),
+        make: String::from(&quot;Ferrari&quot;),
+        model: String::from(&quot;F8 Tributo&quot;),
+        horse_power: 710,
+        engine_type: FuelType::Electric(String::from(&quot;Lithium Ion&quot;)),
+        number_of_passengers: 2,
+        price: 293480.0,
+    };
+
+    let _car2 = TCar(
+        String::from(&quot;AST 1234&quot;),
+        String::from(&quot;Ferrari&quot;),
+        String::from(&quot;812 GTS&quot;),
+        812,
+        FuelType::Petrol,
+        2,
+        293480.0,
+    );
+
+    let _car3 = UCar();
+    println!(&quot;Car 1 is {:?}&quot;, car1);
+    println!(&quot;Price of 5 ferraris is : $ {}&quot;, car1.calculate_price(5));
+    println!(
+        &quot;Warranty statement for Ferrari F8 Tributo is : {}&quot;,
+        Car::generate_warranty_statement()
+    );
+}
+</code></pre>
+<h3><a class="header" href="#traits" id="traits">Traits</a></h3>
+<p>A trait defines a set of related functionality for a data type. The functionality is described as a set of methods. Traits can be implemented for any data type. Traits are a great way to describe common behaviour shared by many user-defined types (eg structs). This is like polymorphism in object oriented programming, or interfaces in a few other languages (like Go). Let us see an example of how to enhance behaviour of car struct using traits. Let’s consider a (hypothetical) requirement that in a particular country , a vehicle manufacturer has to report on Co2 emissions and Fuel efficiency checks done on every single vehicle being rolled out on the road. How would we implement it?</p>
+<p>The vehicle manufacturer wants to comply with the regulatory requirements for all classes of vehicles manufactured — cars, buses and trucks. A trait is a good way to define the common set of regulatory requirements across vehicle categories:</p>
+<pre><code>trait EnvReg {
+ fn fuel_efficiency_check(&amp;self, fuel_consumption: f32) -&gt; bool;
+ fn co2_emission_check(&amp;self, co2_emission: u8) -&gt; bool;
+}
+</code></pre>
+<p>We have defined a trait above called <strong>EnvReg</strong> (short for Environmental regulations) which has two methods. First is <em>fuel efficiency check</em> and the second is <em>Co2 emission check</em>. Note there is no implementation of these methods specified in trait definition, and the method signatures end with a semicolon.</p>
+<p>Now let us implement this functionality for cars. The syntax is <strong>impl <trait-name> for Car {}</strong></p>
+<pre><code>impl EnvReg for Car {
+    fn fuel_efficiency_check(&amp;self, fuel_consumption: f32) -&gt; bool {
+        // For petrol vehicles , fuel consumption should be 4.1 liters for 100 kms or less
+        if self.fuel_type == FuelType::Petrol {
+            if fuel_consumption &lt;= 4.1 {
+                return true;
+            } else {
+                return false
+            }
+            // For diesel vehicles , fuel consumption should be 3.6 liters for 100 kms or less
+        } else if self.fuel_type == FuelType::Diesel {
+             if fuel_consumption &lt; 3.6 {
+                return true;
+            } else {
+                return false
+            }
+        }
+        return false;
+    }
+
+    fn co2_emission_check(&amp;self, co2_emission: u8) -&gt; bool {
+    // For all cars, carbon emission should be less than or equal to 95g per km.
+        if co2_emission &lt;= 95 {
+            return true;
+        }
+        return false;
+    }
+}
+</code></pre>
+<p>The code is self-explanatory and annotated. Basically given a value from field test, the methods return whether a given vehicle conforms to fuel-efficiency and co2 emission norms based on a set of rules.</p>
+<p>The methods on traits can be invoked just like regular methods on a trait.</p>
+<pre><code>println!(
+ “Fuel efficiency test succeeded? {} “,
+ car1.fuel_efficiency_check(4.3)
+ );
+ //print result of co2 emission test for car
+ println!(
+ “Carbon emission test succeeded? {} “,
+ car1.co2_emission_check(92)
+ );
+</code></pre>
+<p>The vehicle manufacturer can now implement the same trait on the <strong>bus struct</strong> and <strong>truck struct</strong> too. The advantage of traits is that a common set of behaviours can be centrally defined and each type can implement these behaviours in a way that makes sense for that type. For example, the implementation of fuel efficiency checks for trucks could be different because it would be a heavy-duty vehicle where different metrics may apply. But by encoding a common set of environmental regulatory requirements as traits, the vehicle manufacturer can mandate that all vehicle types must implement all functionality associated with that trait, thus avoiding compliance risk.</p>
+<p>Here is the complete code:</p>
+<pre><code>#[derive(Debug, PartialEq)]
+enum FuelType {
+    Petrol,
+    Diesel,
+    Hybrid,
+    Electric(String),
+}
+
+// Define a trait
+
+trait EnvReg {
+    fn fuel_efficiency_check(&amp;self, fuel_consumption: f32) -&gt; bool;
+    fn co2_emission_check(&amp;self, co2_emission: u8) -&gt; bool;
+}
+
+#[derive(Debug)]
+
+struct Car {
+    registration_number: String,
+    make: String,
+    model: String,
+    horse_power: u16,
+    fuel_type: FuelType,
+    number_of_passengers: u8,
+    price: f32,
+}
+
+impl Car {
+    fn calculate_price(&amp;self, quantity: u32) -&gt; f32 {
+        let quantity = quantity as f32;
+        self.price * quantity
+    }
+
+    fn generate_warranty_statement() -&gt; &amp;'static str {
+        &quot;This car carries a warranty of 5 years against any manufacturing defects&quot;
+    }
+}
+
+impl EnvReg for Car {
+    fn fuel_efficiency_check(&amp;self, fuel_consumption: f32) -&gt; bool {
+        // For petrol vehicles , fuel consumption should be 4.1 liters for 100 kms or less
+        if self.fuel_type == FuelType::Petrol {
+            if fuel_consumption &lt;= 4.1 {
+                return true;
+            } else {
+                return false;
+            }
+        // For diesel vehicles , fuel consumption should be 3.6 liters for 100 kms or less
+        } else if self.fuel_type == FuelType::Diesel {
+            if fuel_consumption &lt; 3.6 {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    fn co2_emission_check(&amp;self, co2_emission: u8) -&gt; bool {
+        // For all cars, carbon emission should be less than or equal to 95g per km.
+        if co2_emission &lt;= 95 {
+            return true;
+        }
+        return false;
+    }
+}
+
+fn main() {
+    let car1 = Car {
+        registration_number: String::from(&quot;AST 1234&quot;),
+        make: String::from(&quot;Ferrari&quot;),
+        model: String::from(&quot;F8 Tributo&quot;),
+        horse_power: 710,
+        fuel_type: FuelType::Electric(String::from(&quot;Lithium Ion&quot;)),
+        number_of_passengers: 2,
+        price: 293480.0,
+    };
+
+    // Print the values of car 1
+    println!(&quot;Car 1 is {:?}&quot;, car1);
+
+    //print the price of 5 Farraris
+    println!(&quot;Price of 5 ferraris is : $ {}&quot;, car1.calculate_price(5));
+
+    //print the warranty statement for Cars
+    println!(
+        &quot;Warranty statement for Ferrari F8 Tributo is : {}&quot;,
+        Car::generate_warranty_statement()
+    );
+
+    // Print result of fuel efficiency for car
+    println!(
+        &quot;Fuel efficiency test succeeded? {} &quot;,
+        car1.fuel_efficiency_check(4.3)
+    );
+
+    //print result of co2 emission test for car
+    println!(
+        &quot;FCarbon emission test succeeded? {} &quot;,
+        car1.co2_emission_check(92)
+    );
+}
+</code></pre>
+<p>The code listing contains macros derive(Debug) and derive(PartialEq) which are used here for printing values to standard output and for checking equality conditions for the enum values respectively. You can ignore them for purposes of understanding the topic of this post.</p>
+<h3><a class="header" href="#conclusion" id="conclusion">Conclusion</a></h3>
+<p>Using the example of a vehicle manufacturer, we have seen how in Rust ,</p>
+<ul>
+<li><strong>structs</strong> can be used to model cars and define <em>state</em></li>
+<li>methods and associated functions can be used to specify their <em>behaviour</em></li>
+<li><strong>enums</strong> can be used to specify range of allowed values for a custom data type</li>
+<li><strong>traits</strong> can be used to describe shared behaviours across user-defined data types</li>
+</ul>
+<p>These are powerful features that enable modelling of even complex problem domains without a lot of boilerplate code.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="lesson_2_3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="lesson_2_3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3001");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
